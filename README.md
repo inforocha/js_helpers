@@ -1,6 +1,6 @@
 # js_helpers
 
-small scripts with auxiliary functions
+small scripts with auxiliary functions.
 pequenos scripts com funções auxiliares
 
 Module made with the intention of helping when looking for simple and reusable functions for everyday problems.
