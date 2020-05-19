@@ -8,13 +8,33 @@ var date_helper = (_ => {
 	const vm = {}
 
 	/*
+	* [en] returns the date resulting from the sum of a number of days on a specified date
+	* [pt-BR] retorna a data resultante da soma de uma quantidade de dias em uma data especificada
+	* @param Date date - object Date
+	* @param int days 
+	* @return Date
+	* @example console.log(date_helper.addDays(new Date(), 5)) // current date added 5 days
+	*/
+	vm.addDays = (date, days) => {
+		const copy = new Date(Number(date))
+		copy.setDate(date.getDate() + days)
+		return copy
+	}
+
+	/*
 	* [en] Transforms a date string in the format YYYY-mm-dd to dd/mm/YYYY
 	* [pt-BR] Transforma uma string de data no formato YYYY-mm-dd para dd/mm/YYYY
 	* @param String dateString
 	* @return string
 	* @example console.log(date_helper.turnsDateBRIntoEn('1982-11-25')) // 25/11/1982 
+	* @example console.log(date_helper.turnsDateBRIntoEn('1982-11-25 12:20:56')) // 25/11/1982 12:20:56 
 	*/
-	vm.turnsDateEnIntoBr = dateString => dateString.split('-').reverse().join('/')
+	vm.turnsDateEnIntoBr = dateString => {
+		let parts = dateString.split(' ')
+		let dt = parts[0].split('-').reverse().join('/')
+		let hours = parts[1] || '' 
+		return `${dt} ${hours}`
+	}
 
 	/*
 	* [en] Transforms a date string in the format dd/mm/YYYY to YYYY-mm-dd
@@ -26,7 +46,36 @@ var date_helper = (_ => {
 	vm.turnsDateBRIntoEn = dateString => dateString.split('/').reverse().join('-')
 
 	/**
-	* [en] Turns String into Data object
+	* [en] Turns Date object into String
+	* [pt-BR] Transforma um um objeto Data em uma string
+	* @param object
+	*	keys:
+	*		required Date object dateObject
+	*		String inputFormat - valid formats: 'YYYY-mm-dd' [default], 'dd/mm/YYYY'
+	* @return String
+	* @example
+	*	date_helper.turnsDataObjectIntoString({dateObject: new Date(), outputFormat: 'dd/mm/YYYY'})
+	*	date_helper.turnsDataObjectIntoString({dateObject: new Date()})
+	*/
+	vm.turnsDataObjectIntoString = data => {
+		let outputFormat = data && data.outputFormat ? data.outputFormat : 'YYYY-mm-dd' 
+		let date = data.dateObject
+		let day  = date.getDate().toString()
+		let month = (date.getMonth()+1).toString() //+1 in getMonth init zero.
+		let year = date.getFullYear()
+
+		// adjust
+		day = (day.length == 1) ? `0${day}` : day
+		month = (month.length == 1) ? `0${month}` : month
+
+		if(outputFormat == 'YYYY-mm-dd') return `${year}-${month}-${day}`;
+		if(outputFormat == 'dd/mm/YYYY') return `${day}/${month}/${year}`;
+
+		throw "[date_helper] turnsDataObjectIntoString - unknown format"
+	}
+
+	/**
+	* [en] Turns String into Date object
 	* [pt-BR] Transforma uma string em um objeto Data
 	* @param object
 	*	keys:
@@ -67,6 +116,8 @@ var date_helper = (_ => {
 	}
 
 	/*
+	* @todo usar a funcao turnsDataObjectIntoString no lugar do codigo similar nesta funcao
+	*
 	* [en] Returns today's date string in the desired format
 	* [pt-BR] Retorna a string da data de hoje no formato desejado
 	* @param object
@@ -76,19 +127,22 @@ var date_helper = (_ => {
 	*/
 	vm.today = data => {
 		let outputFormat = data && data.outputFormat ? data.outputFormat : 'YYYY-mm-dd' 
-		let date = new Date()
-		let day  = date.getDate().toString()
-		let month = (date.getMonth()+1).toString() //+1 in getMonth init zero.
-		let year = date.getFullYear()
+		// let date = new Date()
+		// let day  = date.getDate().toString()
+		// let month = (date.getMonth()+1).toString() //+1 in getMonth init zero.
+		// let year = date.getFullYear()
 
-		// adjust
-		day = (day.length == 1) ? `0${day}` : day
-		month = (month.length == 1) ? `0${month}` : month
+		// // adjust
+		// day = (day.length == 1) ? `0${day}` : day
+		// month = (month.length == 1) ? `0${month}` : month
 
-		if(outputFormat == 'YYYY-mm-dd') return `${year}-${month}-${day}`;
-		if(outputFormat == 'dd/mm/YYYY') return `${day}/${month}/${year}`;
-
-		throw "[date_helper] today - unknown format"
+		// if(outputFormat == 'YYYY-mm-dd') return `${year}-${month}-${day}`;
+		// if(outputFormat == 'dd/mm/YYYY') return `${day}/${month}/${year}`;
+		try {
+			return vm.turnsDataObjectIntoString({dateObject: new Date(), outputFormat: outputFormat})
+		} catch(err) {
+			throw "[date_helper] today - unknown format"
+		}
 	}
 
 	return vm
