@@ -1,4 +1,12 @@
- let create_excel_helper = (_ => {
+/**
+* [EN] create an excel file
+* [PT] cria um arquivo excel
+* @example
+* create_excel_helper.generate({elementFromPrint: document.getElementsByClassName('your_table_id')})
+* @version 1.0
+* @autor Davi Rocha(info.rocha2@gmail.com)
+*/
+let create_excel_helper = (_ => {
     'use strict';
     vm = {}
 
@@ -26,7 +34,3 @@
     
     return vm
 })();
-
-/*
-create_excel_helper.generate({elementFromPrint: document.getElementsByClassName('your_table_id')})
-*/
