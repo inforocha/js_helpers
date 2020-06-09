@@ -2,6 +2,7 @@
 * CREATES AN OBJECT THAT RETURNS FUNCTIONS WITH DATE FEATURES.
 * CRIA UM OBJETO QUE DEVOLVE FUNCOES COM FUNCIONALIDADES SOBRE DATAS.
 * @autor Davi Rocha (info.rocha2@gmail.com)
+* @version 1.2
 * @return Object
 */
 var date_helper = (_ => {
