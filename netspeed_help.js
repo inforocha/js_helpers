@@ -4,7 +4,7 @@
 */
 let netspeed_help = (_ => {
     // @todo JUST AN EXAMPLE, PLEASE USE YOUR OWN PICTURE!
-    const imageAddr = "http://www.kenrockwell.com/contax/images/g2/examples/31120037-5mb.jpg" 
+    const imageAddr = "http://www.kenrockwell.com/contax/images/g2/examples/31120037-5mb.jpg" + "?n=" + Math.random();
     const downloadSize = 4995374 //bytes
     let debugInConnsole = true
     let vm = {}
