@@ -29,7 +29,7 @@ let countDown_helper = (_ => {
 	// [pt] informa a data que o contador ira iniciar
 	function _setDateHourMax(dth) {
 		dts.dateHourMax = new Date(dth)
-		dts.dateHourVariable = new Date(dth).getTime()
+		dts.dateHourVariable = new Date(dth).getTime() -1000
 	}
 
 	// [en] informs the date that the accountant will finish
