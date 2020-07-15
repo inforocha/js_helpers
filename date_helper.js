@@ -2,7 +2,7 @@
 * CREATES AN OBJECT THAT RETURNS FUNCTIONS WITH DATE FEATURES.
 * CRIA UM OBJETO QUE DEVOLVE FUNCOES COM FUNCIONALIDADES SOBRE DATAS.
 * @autor Davi Rocha (info.rocha2@gmail.com)
-* @version 1.2
+* @version 1.3
 * @return Object
 */
 var date_helper = (_ => {
@@ -52,9 +52,10 @@ var date_helper = (_ => {
 	* @param object
 	*	keys:
 	*		required Date object dateObject
-	*		String inputFormat - valid formats: 'YYYY-mm-dd' [default], 'dd/mm/YYYY'
+	*		String inputFormat - valid formats: 'YYYY-mm-dd' [default], 'dd/mm/YYYY', 'dd/mm/YYYY HH:ii:ss', 'YYYY-mm-dd HH:ii:ss'
 	* @return String
 	* @example
+	*	date_helper.turnsDataObjectIntoString({dateObject: new Date(), outputFormat: 'dd/mm/YYYY HH:ii:ss'})
 	*	date_helper.turnsDataObjectIntoString({dateObject: new Date(), outputFormat: 'dd/mm/YYYY'})
 	*	date_helper.turnsDataObjectIntoString({dateObject: new Date()})
 	*/
@@ -64,13 +65,21 @@ var date_helper = (_ => {
 		let day  = date.getDate().toString()
 		let month = (date.getMonth()+1).toString() //+1 in getMonth init zero.
 		let year = date.getFullYear()
+		let hours = date.getHours()
+		let minutes = date.getMinutes()
+		let seconds = date.getSeconds()
 
 		// adjust
 		day = (day.length == 1) ? `0${day}` : day
 		month = (month.length == 1) ? `0${month}` : month
+		hours = (hours.length == 1) ? `0${hours}` : hours
+		minutes = (minutes.length == 1) ? `0${minutes}` : minutes
+		seconds = (seconds.length == 1) ? `0${seconds}` : seconds
 
 		if(outputFormat == 'YYYY-mm-dd') return `${year}-${month}-${day}`;
+		if(outputFormat == 'YYYY-mm-dd HH:ii:ss') return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 		if(outputFormat == 'dd/mm/YYYY') return `${day}/${month}/${year}`;
+		if(outputFormat == 'dd/mm/YYYY HH:ii:ss') return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
 
 		throw "[date_helper] turnsDataObjectIntoString - unknown format"
 	}
@@ -128,17 +137,7 @@ var date_helper = (_ => {
 	*/
 	vm.today = data => {
 		let outputFormat = data && data.outputFormat ? data.outputFormat : 'YYYY-mm-dd' 
-		// let date = new Date()
-		// let day  = date.getDate().toString()
-		// let month = (date.getMonth()+1).toString() //+1 in getMonth init zero.
-		// let year = date.getFullYear()
 
-		// // adjust
-		// day = (day.length == 1) ? `0${day}` : day
-		// month = (month.length == 1) ? `0${month}` : month
-
-		// if(outputFormat == 'YYYY-mm-dd') return `${year}-${month}-${day}`;
-		// if(outputFormat == 'dd/mm/YYYY') return `${day}/${month}/${year}`;
 		try {
 			return vm.turnsDataObjectIntoString({dateObject: new Date(), outputFormat: outputFormat})
 		} catch(err) {
