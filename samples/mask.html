@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>Samples</title>
+		<!-- Compiled and minified CSS -->
+	    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+	    <!-- Compiled and minified JavaScript -->
+	    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+	</head>
+	<body>
+		<nav>
+			<div class="nav-wrapper">
+				<a href="#" class="brand-logo">Logo</a>
+				<ul id="nav-mobile" class="right hide-on-med-and-down">
+					<li><a href="index.html">Home</a></li>
+					<li><a href="about.html">About</a></li>
+				</ul>
+			</div>
+		</nav>
+
+		<div class="container">
+			<div class="row" style="margin-bottom: 0;">
+				<div class="col s12 m8 offset-m1 xl7 offset-xl1 center-on-small-only">
+					<h1 class="header">Mask</h1>
+					<h5 class ="light">[EN] Formats values ​​to a standard.</h5>
+					<h5 class ="light">[PT] Formata valores segundo um padrão.</h5>
+				</div>
+
+				<div class="row">
+				    <form class="col s12">
+						<div class="row">
+							<div class="input-field col s6">
+								<input type="text" data-mask="cpf" id="cpf" placeholder="999.999.999-99" class="validate">
+								<label for="cpf">CPF</label>
+							</div>
+							<div class="input-field col s6">
+								<input type="text" data-mask="cnpj" placeholder="99.999.999/9999-99" id="cnpj" class="validate"><br><br>
+								<label for="cnpj">CNPJ</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s6">
+								<input type="text" data-mask="phone" placeholder="(99) 9999-9999|(99) 99999-9999" id="phone" class="validate"><br><br>
+								<label for="phone">PHONE</label>
+							</div>
+							<div class="input-field col s6">
+								<input type="text" data-mask="cep" placeholder="99999-999" id="cep" class="validate"><br><br>
+								<label for="cep">CEP</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s6">
+								<input type="text" data-mask="pis" placeholder="999.99999.99-9" id="pis" class="validate">
+								<label for="pis">PIS</label>
+							</div>
+							<div class="input-field col s6">
+								<input type="text" data-mask="date_ddmmyyyy" placeholder="99/99/9999" id="date_ddmmyyyy" class="validate">
+								<label for="date_ddmmyyyy">Date dd/mm/yyyy</label>
+							</div>
+						</div>
+						<div class="row">
+							<div class="input-field col s6">
+								<input type="text" data-mask="date_ddmmyyyy_hhiiss" placeholder="dd/mm/yyyy h:i:s" id="date_ddmmyyyy_hhiiss" class="validate">
+								<label for="date_ddmmyyyy_hhiiss">Date dd/mm/yyyy h:i:s</label>
+							</div>
+							<!-- <div class="input-field col s6">
+								<input type="text" data-mask="date_ddmmyyyy" placeholder="99/99/9999" id="date_ddmmyyyy" class="validate">
+								<label for="date_ddmmyyyy">Date dd/mm/yyyy</label>
+							</div> -->
+						</div>
+				    </form>
+				</div>
+			</div>
+		</div>
+
+		<footer class="page-footer">
+			<div class="container">
+				<div class="row">
+					<div class="col l6 s12">
+						<h5 class="white-text">Info Rocha</h5>
+						<p class="grey-text text-lighten-4">[EN] When making improvements remember to let us know.</p>
+						<p class="grey-text text-lighten-4">[PT] Quando realizar melhorias lembre-se de nos avisar.</p>
+					</div>
+					<div class="col l4 offset-l2 s12">
+						<h5 class="white-text">Links</h5>
+						<ul>
+							<li><a class="grey-text text-lighten-3" href="https://github.com/inforocha" target="_blank">Dev</a></li>
+							<li><a class="grey-text text-lighten-3" href="https://github.com/inforocha/js_helpers" target="_blank">Repository</a></li>
+							<li><a class="grey-text text-lighten-3" href="index.html">Home</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<script src="../mask_helper.js"></script>
+		<script>
+			const inputs = [...document.querySelectorAll('input')]
+			inputs.map(obj => obj.addEventListener('keyup', mask))
+
+			function mask(e) {
+				let el = e.target
+				let method = el.dataset.mask
+
+				el.value = mask_helper[method](el.value)
+			}
+		</script>
+	</body>
+</html>
