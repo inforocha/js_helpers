@@ -62,7 +62,7 @@ let countDown_helper = (_ => {
 			window.dispatchEvent(event_clock)
 
 			if (hours == 0 && minutes <= 5 && seconds==0) {
-				// criando evento informando o fim da contagem do relogio
+				// criando evento informando 5 minutos da contagem do relogio
 				let event_five_minutes = new Event(`event_five_minutes_${_SUFIXO}`)
 				// disparando o evento
 				window.dispatchEvent(event_five_minutes)

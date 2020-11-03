@@ -43,11 +43,11 @@ const mask_helper = (_ => {
 	// 01/01/1001 12:15:00 todo fix me
 	vm.date_ddmmyyyy_hhiiss = value => value
 		.replace(/\D/g, '')
-		.replace(/(\d{2})(\d)/, '$1/$2') // quando existirem 2 numeros e surgir um terceiro numero
-		.replace(/(\d{2})(\d)/, '$1/$2')
-		.replace(/(\d{4})(\d)/, '$1 $2')
-		.replace(/( \d{2})(\d)/, '$1:$2')
-		.replace(/(\:\d{2})(\d)/, '$1:$2')
+		.replace(/(\d{2})(\d)/, '$1/$2') // encontrar 3 numeros seguidos adiciona uma barra entre o segundo e o terceiro
+		.replace(/(\d{2})(\d)/, '$1/$2') // repete o processo para a segunda parte da data
+		.replace(/(\d{4})(\d)/, '$1 $2') // encontrar 5 numeros seguidos adiciona um espaco entre o quarto e o quinto
+		.replace(/( \d{2})(\d)/, '$1:$2') // encontrar um espaco seguido de 3 numeros adiciona dois pontos entre o segundo e o terceiro
+		.replace(/(\:\d{2})(\d)/, '$1:$2') // encontrar dois pontos seguidos de 3 numeros adiciona dois pontos entre o segundo e o terceiro
 		.replace(/(\:\d{2}\:\d{2})\d+?$/, '$1')
 
 	// 999.99999.99-9
