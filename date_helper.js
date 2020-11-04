@@ -8,6 +8,98 @@
 var date_helper = (_ => {
 	const vm = {}
 
+	/**
+	* [en] Checks if the year is a leap year.
+	* [pt-BR] verifica se o ano eh bissexto.
+	* @param Date dateObject - object Date
+	* @return Boolean
+	* @example 
+	* 	console.log(date_helper.isLeapYear(new Date("1982-11-25"))) // false
+	* 	console.log(date_helper.isLeapYear(new Date("2008-11-25"))) // true
+	*/
+	vm.isLeapYear = dateObject => {
+		const year = dateObject.getFullYear()
+		return (year%4==0 && year%100!=0) || year%400==0
+	}
+
+	/**
+	* [en] Checks if the day is a weekend day (Sat or Sun).
+	* [pt-BR] verifica se o dia esta no fim de semana (sabado ou domingo).
+	* @param Date dateObject - object Date
+	* @return Boolean
+	* @example 
+	* 	console.log(date_helper.isWeekend(new Date("2020-11-07"))) // true
+	* 	console.log(date_helper.isWeekend(new Date("2020-11-01"))) // true
+	* 	console.log(date_helper.isWeekend(new Date("2020-11-02"))) // false
+	*/
+	vm.isWeekend = dateObject => {
+		const day = dateObject.getDay()
+		return day == 0 || day == 6
+	}
+
+	/**
+	* [en] Check if the day is a day of the week (Mon-Fri).
+	* [pt-BR] verifica se o dia esta na semana (ssegunda a sexta).
+	* @param Date dateObject - object Date
+	* @return Boolean
+	* @example 
+	* 	console.log(date_helper.isWeekDay(new Date("2020-11-07"))) // false
+	* 	console.log(date_helper.isWeekDay(new Date("2020-11-01"))) // false
+	* 	console.log(date_helper.isWeekDay(new Date("2020-11-02"))) // true
+	*/
+	vm.isWeekDay = dateObject => {
+		return !vm.isWeekend(dateObject)
+	}
+
+	/**
+	* [en] Gets the number of days in the month.
+	* [pt-BR] retorna a quantidade de dias do mes.
+	* @param Date dateObject - object Date
+	* @return Boolean
+	* @example 
+	* 	console.log(date_helper.getDaysInMonth(new Date("2008-02-01"))) // false
+	* 	console.log(date_helper.getDaysInMonth(new Date("2020-02-01"))) // false
+	* 	console.log(date_helper.getDaysInMonth(new Date("2020-01-01"))) // true
+	*/
+	vm.getDaysInMonth = dateObject => {
+		const month = dateObject.getMonth()
+		const quantityDays = [31,(vm.isLeapYear(dateObject) ? 29:28),31,30,31,30,31,31,30,31,30,31]
+
+		return quantityDays[month]
+	}
+
+	/*
+	* [en] Add a number of years to the date object
+	* [pt-BR] Adiciona um numero de anos em um objeto de data
+	* @param Date date - object Date
+	* @param int years 
+	* @return Date
+	* @example console.log(date_helper.addYears(new Date(), 5)) // current date added 5 years
+	*/
+	vm.addYears = (date, years) => {
+		date.setFullYear(date.getFullYear() + years)
+		return date
+	}
+
+	/*
+	* [en] Add a number of months to the date object
+	* [pt-BR] Adiciona um numero de meses em um objeto de data
+	* @param Date date - object Date
+	* @param int months 
+	* @return Date
+	* @example console.log(date_helper.addMonths(new Date(), 5)) // current date added 5 months
+	*/
+	vm.addMonths = (date, months) => {
+		const temp = date.getDate();
+		
+		date.setMonth(date.getMonth() + months);
+		
+		if (temp > date.getDate())
+			date.addDays(-date.getDate());
+		
+		return date;
+	}
+
 	/*
 	* [en] returns the date resulting from the sum of a number of days on a specified date
 	* [pt-BR] retorna a data resultante da soma de uma quantidade de dias em uma data especificada
@@ -20,6 +112,19 @@ var date_helper = (_ => {
 		const copy = new Date(Number(date))
 		copy.setDate(date.getDate() + days)
 		return copy
+	}
+
+	/*
+	* [en] Add a number of hours to the date object
+	* [pt-BR] Adiciona um numero de horas em um objeto de data
+	* @param Date date - object Date
+	* @param int hours 
+	* @return Date
+	* @example console.log(date_helper.addHours(new Date(), 5)) // current date added 5 hours
+	*/
+	vm.addHours = (date, hours) => {
+		date.setHours(date.getHours() + hours)
+		return date
 	}
 
 	/*
