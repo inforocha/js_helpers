@@ -1,5 +1,22 @@
+/**
+* altera um valor para a mascara informada.
+* @version 1.1
+* @autor Davi Rocha
+* para contribuicoes mandar email para info.rocha@gmail.com
+*/
 const mask_helper = (_ => {
 	let vm = {}
+
+	/**
+	* alterando a entrada para retornar somente numeros
+	* output patern 999
+	* @example 
+	* console.log(mask_helper.integer('123')) // 123
+	* console.log(mask_helper.integer(123)) // 123
+	* console.log(mask_helper.integer('123A')) // 123
+	* console.log(mask_helper.integer('ABC')) // empty
+	*/
+	vm.integer = value => `${value}`.replace(/\D/g, '') // deixando somente numeros
 
 	// 999.999.999-99
 	vm.cpf = value => value

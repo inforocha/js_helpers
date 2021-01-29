@@ -135,11 +135,12 @@ var date_helper = (_ => {
 	* @example console.log(date_helper.turnsDateBRIntoEn('1982-11-25')) // 25/11/1982 
 	* @example console.log(date_helper.turnsDateBRIntoEn('1982-11-25 12:20:56')) // 25/11/1982 12:20:56 
 	*/
-	vm.turnsDateEnIntoBr = dateString => {
+	vm.turnsDateEnIntoBr = (dateString, only_date = false) => {
 		let parts = dateString.split(' ')
 		let dt = parts[0].split('-').reverse().join('/')
-		let hours = parts[1] || '' 
-		return `${dt} ${hours}`
+		let hours = '' 
+		if(!only_date) hours = parts[1] || '' 
+		return `${dt} ${hours}`.trim()
 	}
 
 	/*
@@ -190,7 +191,7 @@ var date_helper = (_ => {
 	}
 
 	/**
-	* [en] Turns String into Date object
+	* [en] Turns String into Data object
 	* [pt-BR] Transforma uma string em um objeto Data
 	* @param object
 	*	keys:
@@ -199,6 +200,7 @@ var date_helper = (_ => {
 	* @return Date
 	* @example
 	*	date_helper.turnsStringIntoDataObject({dateString: '25/11/1982', inputFormat: 'dd/mm/YYYY'})
+	*	date_helper.turnsStringIntoDataObject({dateString: '1982-25-11 00:00:00', inputFormat: 'YYYY-mm-dd HH:ii:ss'})
 	*	date_helper.turnsStringIntoDataObject({dateString: '1982-25-11'})
 	*/
 	vm.turnsStringIntoDataObject = data => {
@@ -207,6 +209,10 @@ var date_helper = (_ => {
 		let inputFormat = data && data.inputFormat ? data.inputFormat : 'YYYY-mm-dd' 
 		let dt
 		switch(inputFormat) {
+			case 'YYYY-mm-dd HH:ii:ss':
+				const temp = dateString.split(' ')
+				dt = temp[0]
+				break
 			case 'YYYY-mm-dd':
 				dt = dateString
 				break
@@ -230,15 +236,40 @@ var date_helper = (_ => {
 		return new Date(date.toDateString()) < new Date(new Date().toDateString())
 	}
 
-	/*
-	* @todo usar a funcao turnsDataObjectIntoString no lugar do codigo similar nesta funcao
-	*
+	/**
+	* [en] compares two dates
+	* [pt-BR] compara duas datas 
+	* @param Date date1
+	* @param Date date2
+	* @return integer
+	* @example
+	* 	const a = new Date('2020-11-01')
+	* 	const b = new Date('2020-11-01')
+	* 	const c = new Date('2020-11-02')
+	* 	date_helper.compareDates(a,b) // 0 ZERO
+	* 	date_helper.compareDates(a,c) // -86400000
+	* 	date_helper.compareDates(b,c) // -86400000
+	* 	date_helper.compareDates(c,b) // 86400000
+	* 	date_helper.compareDates(c,a) // 86400000
+	*/
+	vm.compareDates = (date1, date2) => {
+		if (date1 == 'Invalid Date') throw '[date_helper] compareDates - Invalid Date date1'
+		if (date2 == 'Invalid Date') throw '[date_helper] compareDates - Invalid Date date2'
+		return new Date(date1.toDateString()) - new Date(date2.toDateString())
+	}
+
+	/**
 	* [en] Returns today's date string in the desired format
 	* [pt-BR] Retorna a string da data de hoje no formato desejado
 	* @param object
 	* 	keys:
 	* 		outputFormat - 'YYYY-mm-dd' [default], 'dd/mm/YYYY'
-	* @param String format
+	* @return string
+	*
+	* @example
+	* 	date_helper.today({outputFormat:'dd/mm/YYYY'}) // 25/11/1982
+	* 	date_helper.today({outputFormat:'YYYY-mm-dd'}) // 1982-11-25
+	* 	date_helper.today() // 1982-11-25
 	*/
 	vm.today = data => {
 		let outputFormat = data && data.outputFormat ? data.outputFormat : 'YYYY-mm-dd' 

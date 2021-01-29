@@ -1,0 +1,23 @@
+{
+  "name": "js_helpers",
+  "version": "1.0.0",
+  "description": "[EN]  small scripts with auxiliary functions. Module made with the intention of helping when looking for simple and reusable functions for everyday problems. Feel free to send troubleshooting solutions that you have implemented and the usage example. If you are good at testing and want to create tests for the functions here, it would be of great value. I thank everyone who wishes to contribute. This repository has no intention of earning its own, but rather a community gain. The more information (not just code) we can compile, the more beginner and even veteran developers we can help.",
+  "main": "countDown_helper.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/inforocha/js_helpers.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/inforocha/js_helpers/issues"
+  },
+  "homepage": "https://github.com/inforocha/js_helpers#readme",
+  "devDependencies": {
+    "jest": "^26.6.2"
+  }
+}
