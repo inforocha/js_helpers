@@ -1,4 +1,5 @@
 # js_helpers
+para testes rode nmp install
 
 [EN] 
 small scripts with auxiliary functions.
