@@ -2,10 +2,10 @@
 * CREATES AN OBJECT THAT RETURNS FUNCTIONS WITH DATE FEATURES.
 * CRIA UM OBJETO QUE DEVOLVE FUNCOES COM FUNCIONALIDADES SOBRE DATAS.
 * @autor Davi Rocha (info.rocha2@gmail.com)
-* @version 1.3
+* @version 1.4
 * @return Object
 */
-var date_helper = (_ => {
+const date_helper = (_ => {
 	const vm = {}
 
 	/**
@@ -127,7 +127,7 @@ var date_helper = (_ => {
 		return date
 	}
 
-	/*
+	/**
 	* [en] Transforms a date string in the format YYYY-mm-dd to dd/mm/YYYY
 	* [pt-BR] Transforma uma string de data no formato YYYY-mm-dd para dd/mm/YYYY
 	* @param String dateString
@@ -141,6 +141,47 @@ var date_helper = (_ => {
 		let hours = '' 
 		if(!only_date) hours = parts[1] || '' 
 		return `${dt} ${hours}`.trim()
+	}
+
+	/**
+	* [en] Checks whether a date is valid
+	* [pt-BR] Verifica se uma data eh valida
+	* @param object
+	*	keys:
+	*		required Date object dateObject
+	*		String inputFormat - valid formats: 'YYYY-mm-dd' [default], 'dd/mm/YYYY', 'dd/mm/YYYY HH:ii:ss', 'YYYY-mm-dd HH:ii:ss'
+	* date_helper.isValidDateString({dateString: '25/11/198', inputFormat: 'dd/mm/YYYY'}) // false
+	* date_helper.isValidDateString({dateString: '', inputFormat: 'dd/mm/YYYY'}) // false
+	* date_helper.isValidDateString({dateString: '25/11/1982', inputFormat: 'dd/mm/YYYY'}) // true
+	* date_helper.isValidDateString({dateString: '1982-11-25', inputFormat: 'YYYY-mm-dd'}) // true
+	* date_helper.isValidDateString({dateString: '1982-11-25 12:00:00', inputFormat: 'YYYY-mm-dd HH:ii:ss'}) // true
+	*/
+	vm.isValidDateString = data => {
+		let dt = ''
+		const dateString = data.dateString
+		const inputFormat = data.inputFormat
+		switch(inputFormat) {
+			case 'YYYY-mm-dd HH:ii:ss':
+				const temp = dateString.split(' ')
+				dt = temp[0]
+				break
+			case 'YYYY-mm-dd':
+				dt = dateString
+				break
+			case 'dd/mm/YYYY':
+				dt = vm.turnsDateBRIntoEn(dateString)
+				break
+		}
+		if(dt.length != 10) return false
+
+		const date_object = vm.turnsStringIntoDataObject({dateString: dt})
+
+		return vm.isValidDateObject(date_object)
+	}
+
+	vm.isValidDateObject = date_object => {
+		return (date_object != 'Invalid Date')
+		//return date_object instanceof Date && !isNaN(date_object)
 	}
 
 	/*

@@ -2,9 +2,10 @@
 * CREATE AN OBJECT THAT RETURNS FUNCTIONS WITH URL INFORMATION AND FUNCTIONS TO USE THE WINDOWS OBJECT.
 * CRIA UM OBJETO QUE DEVOLVE FUNCOES COM INFORMACOES SOBRE A URL E FUNCOES PARA UTILIZAR O OBJETO WINDOWS.
 * @autor Davi Rocha (info.rocha2@gmail.com)
+* @version 1.1
 * @return Object
 */
-let url_helper = (_ => {
+const url_helper = (_ => {
 	const vm = {}
 	let getUrl = window.location;
 
