@@ -1,6 +1,6 @@
 /**
 * altera um valor para a mascara informada.
-* @version 1.3
+* @version 1.4
 * @autor Davi Rocha
 * para contribuicoes mandar email para info.rocha@gmail.com
 */
@@ -56,11 +56,24 @@ const mask_helper = (_ => {
 		.replace(/(-\d{3})\d+?$/, '$1')
 
 	// 01/01/1001
-	vm.date_ddmmyyyy = value => value
+	vm.date_ddmmyyyy = value => `${value}`
 		.replace(/\D/g, '')
 		.replace(/(\d{2})(\d)/, '$1/$2')
 		.replace(/(\d{2})(\d)/, '$1/$2')
 		.replace(/(\/\d{4})\d+?$/, '$1')
+
+	/**
+	* alterando a entrada para retornar a hora e minutos no formato HH:ii
+	* output patern 99:99
+	* @example 
+	* console.log(mask_helper.date_hhii('abc')) // ''
+	* console.log(mask_helper.date_hhii('12:b15')) // 12:15
+	* console.log(mask_helper.date_hhii('1215')) // 12:15
+	* console.log(mask_helper.date_hhii('')) // ''
+	*/
+	vm.date_hhii = value => `${value}`
+		.replace(/\D/g, '')
+		.replace(/(\d{2})(\d)/, '$1/$2')
 
 	// 01/01/1001 12:15:00 todo fix me
 	vm.date_ddmmyyyy_hhiiss = value => value
