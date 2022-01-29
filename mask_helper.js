@@ -1,6 +1,6 @@
 /**
 * altera um valor para a mascara informada.
-* @version 1.4
+* @version 1.5
 * @autor Davi Rocha
 * para contribuicoes mandar email para info.rocha@gmail.com
 */
@@ -9,14 +9,26 @@ const mask_helper = (_ => {
 	const vm = {}
 
 	/**
-	* alterando a entrada para retornar somente numeros
-	* output patern 999
-	* @example 
-	* console.log(mask_helper.integer('123')) // 123
-	* console.log(mask_helper.integer(123)) // 123
-	* console.log(mask_helper.integer('123A')) // 123
-	* console.log(mask_helper.integer('ABC')) // empty
-	*/
+	 * ESPECIFICA PARA INPUTS HTML
+	 * @param objetc el - o elemento html
+	 * @param string fn - a funcao desejada para a mascara
+	 * @example
+	 * <input type="text" onkeyup="mask_helper.mask_with(this, 'integer')">
+	 */
+	vm.mask_with = (el,fn) => {
+		const function_for_execution = typeof mask_helper[fn] != 'undefined' ? mask_helper[fn] : function(x) { return x }
+		el.value = function_for_execution(el.value)
+	}
+
+	/**
+	 * alterando a entrada para retornar somente numeros
+	 * output patern 999
+	 * @example 
+	 * console.log(mask_helper.integer('123')) // 123
+	 * console.log(mask_helper.integer(123)) // 123
+	 * console.log(mask_helper.integer('123A')) // 123
+	 * console.log(mask_helper.integer('ABC')) // empty
+	 */
 	vm.integer = value => `${value}`.replace(/\D/g, '') // deixando somente numeros
 
 	vm.float2Digitos = value => `${value}`
@@ -62,15 +74,25 @@ const mask_helper = (_ => {
 		.replace(/(\d{2})(\d)/, '$1/$2')
 		.replace(/(\/\d{4})\d+?$/, '$1')
 
+	// 01/01/1001 12:15:00 todo fix me
+	vm.date_ddmmyyyy_hhiiss = value => value
+		.replace(/\D/g, '')
+		.replace(/(\d{2})(\d)/, '$1/$2') // encontrar 3 numeros seguidos adiciona uma barra entre o segundo e o terceiro
+		.replace(/(\d{2})(\d)/, '$1/$2') // repete o processo para a segunda parte da data
+		.replace(/(\d{4})(\d)/, '$1 $2') // encontrar 5 numeros seguidos adiciona um espaco entre o quarto e o quinto
+		.replace(/( \d{2})(\d)/, '$1:$2') // encontrar um espaco seguido de 3 numeros adiciona dois pontos entre o segundo e o terceiro
+		.replace(/(\:\d{2})(\d)/, '$1:$2') // encontrar dois pontos seguidos de 3 numeros adiciona dois pontos entre o segundo e o terceiro
+		.replace(/(\:\d{2}\:\d{2})\d+?$/, '$1')
+
 	/**
-	* alterando a entrada para retornar a hora e minutos no formato HH:ii
-	* output patern 99:99
-	* @example 
-	* console.log(mask_helper.date_hhii('abc')) // ''
-	* console.log(mask_helper.date_hhii('12:b15')) // 12:15
-	* console.log(mask_helper.date_hhii('1215')) // 12:15
-	* console.log(mask_helper.date_hhii('')) // ''
-	*/
+	 * alterando a entrada para retornar a hora e minutos no formato HH:ii
+	 * output patern 99:99
+	 * @example 
+	 * console.log(mask_helper.date_hhii('abc')) // ''
+	 * console.log(mask_helper.date_hhii('12:b15')) // 12:15
+	 * console.log(mask_helper.date_hhii('1215')) // 12:15
+	 * console.log(mask_helper.date_hhii('')) // ''
+	 */
 	vm.date_hhii = value => `${value}`
 		.replace(/\D/g, '')
 		.replace(/(\d{2})(\d)/, '$1/$2')
@@ -94,10 +116,10 @@ const mask_helper = (_ => {
 		.replace(/(-\d)\d+?$/, '$1')
 
 	/**
-	* Troca todos os caractere por seu correspondente nao acentuado
-	* @example
-	* console.log(mask_helper.removeDiacriticos('àção')) // acao
-	*/
+	 * Troca todos os caractere por seu correspondente nao acentuado
+	 * @example
+	 * console.log(mask_helper.removeDiacriticos('àção')) // acao
+	 */
 	vm.removeDiacriticos = str => {
 		const mapaDefault = [
 		    {'base':'A', 'letras':'\u0041\u24B6\uFF21\u00C0\u00C1\u00C2\u1EA6\u1EA4\u1EAA\u1EA8\u00C3\u0100\u0102\u1EB0\u1EAE\u1EB4\u1EB2\u0226\u01E0\u00C4\u01DE\u1EA2\u00C5\u01FA\u01CD\u0200\u0202\u1EA0\u1EAC\u1EB6\u1E00\u0104\u023A\u2C6F'},
