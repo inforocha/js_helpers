@@ -1,13 +1,16 @@
+/**
+ * versao: 2
+ */
 const dom_helper = (_ => {
 	const vm = {}
 
 	/**
-	* Como o atributo readonly nao fucniona para selects este metodo 
-	* altera o select de uma forma a simular este estado.
-	* Torna-se util quando deseja um selec desabilitado que ainda precisa 
-	* ter seus dados enviados em um formulario, ja que o atributo disabled
-	* impede isso.
-	*/
+	 * Como o atributo readonly nao fucniona para selects este metodo 
+	 * altera o select de uma forma a simular este estado.
+	 * Torna-se util quando deseja um selec desabilitado que ainda precisa 
+	 * ter seus dados enviados em um formulario, ja que o atributo disabled
+	 * impede isso.
+	 */
 	vm.readonly = el => {
 		el.style.background = '#eee' // Simular campo inativo com a cor cinza
 		el.style.pointerEvents = 'none' // Desabilita os eventos APENAS do mouse no elemento, qualquer acao tomada com o mouse sobre o elemento nao tera qualquer efeito.
@@ -17,8 +20,8 @@ const dom_helper = (_ => {
 	}
 
 	/**
-	* Limpa formatacao do metodo vm.readonly
-	*/
+	 * Limpa formatacao do metodo vm.readonly
+	 */
 	vm.clearReadonly = el => {
 		el.style.background = '#fff' // voltando pra branco
 		el.style.pointerEvents = '' // Desabilita os eventos APENAS do mouse no elemento, qualquer acao tomada com o mouse sobre o elemento nao tera qualquer efeito.
@@ -28,68 +31,88 @@ const dom_helper = (_ => {
 	}
 
 	/**
-	* Retorna o indice do valor passado por parametro
-	* @param el - select
-	* @param value - valor que deseja saber o indice
-	* @return int (-1 caso nao exista ou o valor numeroco do indice)
-	* @example
-	* 	<select id="select_idperiodo" class="form-control">
-	* 		<option value="1" selected>val1</option>
-	* 		<option value="2">val2</option>
-	* 	</select>
-	* const el = document.getElementById('elementId')
-	* console.log(url_helper.indice_by_value(el,1)) // 0 
-	* console.log(url_helper.indice_by_value(el,2)) // 1 
-	*/
+	 * Retorna o indice do valor passado por parametro
+	 * @param el - select
+	 * @param value - valor que deseja saber o indice
+	 * @return int (-1 caso nao exista ou o valor numeroco do indice)
+	 * @example
+	 * 	<select id="select_idperiodo" class="form-control">
+	 * 		<option value="1" selected>val1</option>
+	 * 		<option value="2">val2</option>
+	 * 	</select>
+	 * const el = document.getElementById('elementId')
+	 * console.log(dom_helper.indice_by_value(el,1)) // 0 
+	 * console.log(dom_helper.indice_by_value(el,2)) // 1 
+	 */
 	vm.indice_by_value = (el, value) => [...el.options].map(obj => obj.value).indexOf(value)
 
 	/**
-	* retorna o objeto dataset do option selected do objeto informado
-	* @example
-	* 	<select id="select_idperiodo" class="form-control">
-	* 		<option value="1" data-ex="a" selected>val1</option>
-	* 		<option value="2" data-ex="b">val2</option>
-	* 	</select>
-	* const el = document.getElementById('elementId')
-	* console.log(url_helper.selected_data(el)) // {ex: "a"} 
-	*/
+	 * retorna o objeto dataset do option selected do objeto informado
+	 * @example
+	 * 	<select id="select_idperiodo" class="form-control">
+	 * 		<option value="1" data-ex="a" selected>val1</option>
+	 * 		<option value="2" data-ex="b">val2</option>
+	 * 	</select>
+	 * const el = document.getElementById('elementId')
+	 * console.log(dom_helper.selected_data(el)) // {ex: "a"} 
+	 */
 	vm.selected_data = el => ({...el.options[el.selectedIndex].dataset})
 
 	/**
-	* retorna o value do option selected do objeto informado
-	* @example
-	* 	<select id="select_idperiodo" class="form-control">
-	* 		<option value="1" selected>val1</option>
-	* 		<option value="2">val2</option>
-	* 	</select>
-	* const el = document.getElementById('elementId')
-	* console.log(url_helper.selected_value(el)) // 1 
-	*/
+	 * retorna o value do option selected do objeto informado
+	 * @example
+	 * 	<select id="select_idperiodo" class="form-control">
+	 * 		<option value="1" selected>val1</option>
+	 * 		<option value="2">val2</option>
+	 * 	</select>
+	 * const el = document.getElementById('elementId')
+	 * console.log(dom_helper.selected_value(el)) // 1 
+	 */
 	vm.selected_value = el => el.options[el.selectedIndex].value
 
 	/**
-	* retorna o value do option selected do objeto informado
-	* @example
-	* 	<select id="select_idperiodo" class="form-control">
-	* 		<option value="1" selected>val1</option>
-	* 		<option value="2">val2</option>
-	* 	</select>
-	* const el = document.getElementById('elementId')
-	* console.log(url_helper.selected_text(el)) // val1 
-	*/
+	 * retorna o value do option selected do objeto informado
+	 * @example
+	 * 	<select id="select_idperiodo" class="form-control">
+	 * 		<option value="1" selected>val1</option>
+	 * 		<option value="2">val2</option>
+	 * 	</select>
+	 * const el = document.getElementById('elementId')
+	 * console.log(dom_helper.selected_text(el)) // val1 
+	 */
 	vm.selected_text = el => el.options[el.selectedIndex].text
 
 	/**
-	* retorna o value do indice do option selected no objeto informado
-	* @example
-	* 	<select id="select_idperiodo" class="form-control">
-	* 		<option value="1" selected>val1</option>
-	* 		<option value="2">val2</option>
-	* 	</select>
-	* const el = document.getElementById('elementId')
-	* console.log(url_helper.selected_index(el)) // 0 
-	*/
+	 * retorna o value do indice do option selected no objeto informado
+	 * @example
+	 * 	<select id="select_idperiodo" class="form-control">
+	 * 		<option value="1" selected>val1</option>
+	 * 		<option value="2">val2</option>
+	 * 	</select>
+	 * const el = document.getElementById('elementId')
+	 * console.log(dom_helper.selected_index(el)) // 0 
+	 */
 	vm.selected_index = el => el.selectedIndex
+
+    /**
+     * Faz o download do arquivo indicado na url
+	 * @example
+	 * 	dom_helper.promptDownload('url_do_arquivo')
+     *
+     * @param {string} url url do arquivo que deve ser baixado.
+     */
+    vm.promptDownload = url => {
+    	// cria um elemento link com a url informada e oculto do usuario.
+        const elementDownload = document.createElement("a");
+        elementDownload.setAttribute('href', url);
+        elementDownload.style.display = 'none';
+        // diciona o link na tela
+        document.body.appendChild(elementDownload);
+        // clica no link para realizar o download
+        elementDownload.click();
+        // remove o link da tela.
+        document.body.removeChild(elementDownload);
+    }
 
 	return vm
 })();
