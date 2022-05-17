@@ -1,9 +1,9 @@
 /**
-* altera um valor para a mascara informada.
-* @version 1.5
-* @autor Davi Rocha
-* para contribuicoes mandar email para info.rocha@gmail.com
-*/
+ * @autor Davi Rocha (info.rocha2@gmail.com)
+ * altera um valor para a mascara informada.
+ * @version 1.5
+ * para contribuicoes mandar email para info.rocha@gmail.com
+ */
 const mask_helper = (_ => {
 	"use strict";
 	const vm = {}
@@ -67,7 +67,11 @@ const mask_helper = (_ => {
 		.replace(/(\d{5})(\d)/, '$1-$2')
 		.replace(/(-\d{3})\d+?$/, '$1')
 
-	// 01/01/1001
+	/**
+	 * @example
+	 * <input onkeyup="mask_helper.mask_with(this, 'date_ddmmyyyy')" type="text" value="" maxlength="8"  /> // nesse caso ele ja ira modificar ao digitar no input mascarando seu valor
+	 * console.log(mask_helper.date_ddmmyyyy('01011001')) // 01/01/1001
+	 */
 	vm.date_ddmmyyyy = value => `${value}`
 		.replace(/\D/g, '')
 		.replace(/(\d{2})(\d)/, '$1/$2')

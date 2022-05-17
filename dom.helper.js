@@ -1,5 +1,6 @@
 /**
- * versao: 2
+ * @autor Davi Rocha (info.rocha2@gmail.com)
+ * versao: 2.1
  */
 const dom_helper = (_ => {
 	const vm = {}
@@ -93,6 +94,21 @@ const dom_helper = (_ => {
 	 * console.log(dom_helper.selected_index(el)) // 0 
 	 */
 	vm.selected_index = el => el.selectedIndex
+
+	/**
+	 * Altera o indice selecionado.
+	 * @param el - select
+	 * @param value - valor que deseja saber o indice
+	 * @return undefined
+	 * @example
+	 * 	<select id="select_idperiodo" class="form-control">
+	 * 		<option value="1" selected>val1</option>
+	 * 		<option value="2">val2</option>
+	 * 	</select>
+	 * const el = document.getElementById('elementId') // indice selecionado eh zero
+	 * dom_helper.set_selected_index(el,1) // novo indice selecionado serah 1
+	 */
+	vm.set_selected_index = (el, new_index) => el.selectedIndex = new_index
 
     /**
      * Faz o download do arquivo indicado na url
