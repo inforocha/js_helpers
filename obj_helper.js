@@ -1,4 +1,4 @@
-let obj_help = (_ => {
+const obj_help = (_ => {
 	let vm = {}
 
 	vm.isObjectEmpty = obj => {
