@@ -2,7 +2,7 @@
  * CREATES AN OBJECT THAT RETURNS FUNCTIONS WITH DATE FEATURES.
  * CRIA UM OBJETO QUE DEVOLVE FUNCOES COM FUNCIONALIDADES SOBRE DATAS.
  * @autor Davi Rocha (info.rocha2@gmail.com)
- * @version 2.0
+ * @version 2.1
  * @return Object
  */
 const date_helper = (_ => {
@@ -267,8 +267,8 @@ const date_helper = (_ => {
 				dt = vm.turnsDateBRIntoEn(dateString)
 				break
 		}
-
 		dt = dt.split('-')
+
 		return new Date(dt[0], (dt[1]-1), dt[2]) // month init zero.
 	}
 
@@ -407,6 +407,33 @@ const date_helper = (_ => {
 			text: `${days} dias, ${hours}h, ${minutes}m, ${seconds}s`
 
 		} 
+	}
+
+	/**
+	 * [en] Takes 2 dates and returns an array with all the dates between them including themselves.
+	 * [pt-BR] Pega 2 datas e retorna um array com todas as datas entre elas incluindo elas mesmas.
+	 *
+	 * @example
+	 *		const dt1_en_obj = new Date('1982-11-25')
+	 *		const dt2_en_obj = new Date('1982-11-27')
+	 *		const array_obj = date_helper.getDatesBetween(dt1_en_obj,dt2_en_obj)
+	 *		const array_ptbr_str = array_obj.map(d => date_helper.turnsDataObjectIntoString({dateObject: d, outputFormat: 'dd/mm/YYYY'}))
+	 *		const array_en_str = array_obj.map(d => date_helper.turnsDataObjectIntoString({dateObject: d}))
+	 *		console.log(array_ptbr_str) // ['25/11/1982', '26/11/1982','27/11/1982']
+	 *		console.log(array_en_str) // ['1982-11-25', '1982-11-26','1982-11-27']
+	 *
+	 * @return array
+	 */
+	vm.getDatesBetween = (startDate, endDate) => {
+		const dates = [];
+		let currentDate = startDate;
+
+		while (currentDate <= endDate) {
+			dates.push(currentDate);
+			currentDate = vm.addDays(currentDate, 1)
+		}
+
+		return dates;
 	}
 
 	return vm
