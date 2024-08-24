@@ -1,6 +1,6 @@
 /**
  * @autor Davi Rocha (info.rocha2@gmail.com)
- * versao: 2.1
+ * versao: 2.2
  */
 const dom_helper = (_ => {
 	const vm = {}
@@ -110,25 +110,40 @@ const dom_helper = (_ => {
 	 */
 	vm.set_selected_index = (el, new_index) => el.selectedIndex = new_index
 
-    /**
-     * Faz o download do arquivo indicado na url
+	/**
+	 * Altera o indice selecionado para o mesmo indice do valor informado.
+	 * @param el - select
+	 * @param value - valor que deseja saber o indice
+	 * @return undefined
+	 * @example
+	 * 	<select id="select_idperiodo" class="form-control">
+	 * 		<option value="1" selected>val1</option>
+	 * 		<option value="2">val2</option>
+	 * 	</select>
+	 * const el = document.getElementById('elementId') // indice selecionado eh zero
+	 * dom_helper.set_selected_value(el,'2') // novo indice selecionado serah do texto 'val2'
+	 */
+	vm.set_selected_value = (el, value) => el.selectedIndex = vm.indice_by_value(el, value)
+	
+	/**
+	 * Faz o download do arquivo indicado na url
 	 * @example
 	 * 	dom_helper.promptDownload('url_do_arquivo')
-     *
-     * @param {string} url url do arquivo que deve ser baixado.
-     */
-    vm.promptDownload = url => {
-    	// cria um elemento link com a url informada e oculto do usuario.
-        const elementDownload = document.createElement("a");
-        elementDownload.setAttribute('href', url);
-        elementDownload.style.display = 'none';
-        // diciona o link na tela
-        document.body.appendChild(elementDownload);
-        // clica no link para realizar o download
-        elementDownload.click();
-        // remove o link da tela.
-        document.body.removeChild(elementDownload);
-    }
+	 *
+	 * @param {string} url url do arquivo que deve ser baixado.
+	 */
+	vm.promptDownload = url => {
+		// cria um elemento link com a url informada e oculto do usuario.
+		const elementDownload = document.createElement("a");
+		elementDownload.setAttribute('href', url);
+		elementDownload.style.display = 'none';
+		// diciona o link na tela
+		document.body.appendChild(elementDownload);
+		// clica no link para realizar o download
+		elementDownload.click();
+		// remove o link da tela.
+		document.body.removeChild(elementDownload);
+	}
 
 	return vm
 })();
